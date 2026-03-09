@@ -88,7 +88,7 @@ export default function LoginPage() {
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl font-bold tracking-tight text-center">Log in</CardTitle>
                     <CardDescription className="text-zinc-400 text-center">
-                        Enter your email and password to access your Nano Banana 2 prompts
+                        Enter your email and password to access your mantras
                     </CardDescription>
                 </CardHeader>
                 <Suspense fallback={<CardContent className="py-10 text-center text-zinc-500">Loading form...</CardContent>}>

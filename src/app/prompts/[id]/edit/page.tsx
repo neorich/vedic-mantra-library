@@ -3,7 +3,7 @@ import { PromptForm } from '../../prompt-form'
 import { redirect, notFound } from 'next/navigation'
 
 export const metadata = {
-    title: 'Edit Prompt | Nano Banana 2',
+    title: 'Edit Mantra | Vedic Mantra Library',
 }
 
 export default async function EditPromptPage({
@@ -38,7 +38,7 @@ export default async function EditPromptPage({
     return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">
             <div className="mb-8 border-b border-zinc-800/50 pb-4">
-                <h1 className="text-3xl font-bold tracking-tight text-zinc-100">Edit Prompt</h1>
+                <h1 className="text-3xl font-bold tracking-tight text-zinc-100">Edit Mantra</h1>
                 <p className="text-zinc-400 mt-1">Refining: {prompt.title}</p>
             </div>
 

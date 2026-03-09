@@ -45,7 +45,7 @@ export default async function DashboardPage({
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight text-zinc-100">My Library</h1>
-                    <p className="text-zinc-400 mt-1">Manage your battle-tested Nano Banana 2 prompts.</p>
+                    <p className="text-zinc-400 mt-1">Manage your collection of sacred mantras.</p>
                 </div>
                 <Link href="/prompts/new">
                     <Button className="bg-yellow-500 hover:bg-yellow-600 text-zinc-950 font-semibold shadow-lg shadow-yellow-500/20">
@@ -81,7 +81,7 @@ export default async function DashboardPage({
                     <p className="text-zinc-500 max-w-sm mb-6">
                         {query
                             ? `No prompts matching "${query}". Try a different search.`
-                            : "You haven't saved any Nano Banana 2 prompts yet. Create your first one to get started!"}
+                            : "You haven't saved any mantras yet. Create your first one to get started!"}
                     </p>
                     {!query && (
                         <Link href="/prompts/new">

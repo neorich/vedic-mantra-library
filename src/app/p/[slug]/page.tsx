@@ -18,11 +18,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         .eq('slug', resolvedParams.slug)
         .single()
 
-    if (!prompt) return { title: 'Not Found | Nano Banana 2' }
+    if (!prompt) return { title: 'Not Found | Vedic Mantra Library' }
 
     return {
-        title: `${prompt.title} | Nano Banana 2 Prompts`,
-        description: `A battle-tested ${prompt.category || ''} prompt for Nano Banana 2 image generation.`,
+        title: `${prompt.title} | Vedic Mantra Library`,
+        description: `Sacred ${prompt.category || ''} mantra for spiritual growth and peace.`,
     }
 }
 
@@ -128,7 +128,7 @@ export default async function SinglePromptPage({
 
                 {/* Prompt Content Section */}
                 <div className="p-6 md:p-10">
-                    <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-4">The Prompt</h3>
+                    <h3 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-4">The Mantra</h3>
                     <div className="relative group">
                         <div className="bg-zinc-950 p-6 rounded-xl border border-zinc-800/80 shadow-inner">
                             <p className="text-lg md:text-xl font-mono text-zinc-200 leading-relaxed whitespace-pre-wrap selection:bg-yellow-500/30">
@@ -157,7 +157,7 @@ export default async function SinglePromptPage({
             {/* Related Prompts Section */}
             {relatedPrompts && relatedPrompts.length > 0 && (
                 <div className="mt-16 border-t border-zinc-800/50 pt-12">
-                    <h2 className="text-2xl font-bold text-zinc-100 mb-8">Related Prompts</h2>
+                    <h2 className="text-2xl font-bold text-zinc-100 mb-8">Related Mantras</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {relatedPrompts.map((relatedPrompt: Prompt) => (
                             <PromptCard

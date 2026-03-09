@@ -29,7 +29,7 @@ export default function SignupPage() {
                 <CardHeader className="space-y-1">
                     <CardTitle className="text-2xl font-bold tracking-tight text-center">Sign up</CardTitle>
                     <CardDescription className="text-zinc-400 text-center">
-                        Create an account to save and share Nano Banana 2 prompts
+                        Create an account to save your sacred mantras
                     </CardDescription>
                 </CardHeader>
                 <form action={handleSubmit}>

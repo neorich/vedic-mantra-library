@@ -10,15 +10,14 @@ import { Button } from '@/components/ui/button'
 import { PromptCard } from '@/components/prompt-card'
 import { AlertCircle, Save } from 'lucide-react'
 
-export const nanoBananaCategories = [
-    'Portraits',
-    'Product Mockup',
-    'Editing/Inpainting',
-    'Scene Building',
-    'Typography in Image',
-    'Multi-Subject',
-    'Abstract/Artistic',
-    'Infographic/Diagram'
+export const mantraCategories = [
+    'Meditation & Peace',
+    'Health & Healing',
+    'Success & Prosperity',
+    'Protection & Strength',
+    'Wisdom & Knowledge',
+    'Devotional',
+    'Vashikaran'
 ]
 
 const STYLES = ['photorealistic', 'cinematic', 'text-rendering', 'character-consistency', 'infographic', '4k', 'macro', 'anime']
@@ -35,7 +34,7 @@ export function PromptForm({
 
     const [title, setTitle] = useState(initialData?.title || '')
     const [promptText, setPromptText] = useState(initialData?.prompt_text || '')
-    const [category, setCategory] = useState(initialData?.category || nanoBananaCategories[0])
+    const [category, setCategory] = useState(initialData?.category || mantraCategories[0])
     const [visibility, setVisibility] = useState(initialData?.visibility || 'public')
     const [styleTags, setStyleTags] = useState<string>(initialData?.style_tags?.join(', ') || '')
 
@@ -77,7 +76,7 @@ export function PromptForm({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
                 <h2 className="text-xl font-semibold text-zinc-100 mb-6">
-                    {initialData ? 'Edit Prompt' : 'Create New Prompt'}
+                    {initialData ? 'Edit Mantra' : 'Add New Mantra'}
                 </h2>
                 <form action={handleSubmit} className="space-y-6">
                     {error && (
@@ -101,7 +100,7 @@ export function PromptForm({
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="prompt_text" className="text-zinc-300">Nano Banana 2 Prompt</Label>
+                        <Label htmlFor="prompt_text" className="text-zinc-300">Sanskrit Text / Mantra</Label>
                         <Textarea
                             id="prompt_text"
                             name="prompt_text"
@@ -111,7 +110,7 @@ export function PromptForm({
                             required
                             className="min-h-[200px] bg-zinc-950 border-zinc-800 text-zinc-100 focus-visible:ring-yellow-500/50 font-mono text-sm"
                         />
-                        <p className="text-xs text-zinc-500">The exact text you paste into Nano Banana 2/Gemini</p>
+                        <p className="text-xs text-zinc-500">The sacred sounds or text of the mantra.</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -124,7 +123,7 @@ export function PromptForm({
                                 onChange={(e) => setCategory(e.target.value)}
                                 className="flex h-9 w-full rounded-md border border-zinc-800 bg-zinc-950 px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-yellow-500 disabled:cursor-not-allowed disabled:opacity-50 text-zinc-100"
                             >
-                                {nanoBananaCategories.map((c) => (
+                                {mantraCategories.map((c) => (
                                     <option key={c} value={c}>{c}</option>
                                 ))}
                             </select>
@@ -180,7 +179,7 @@ export function PromptForm({
                         disabled={isLoading}
                     >
                         <Save className="w-4 h-4 mr-2" />
-                        {isLoading ? 'Saving...' : (initialData ? 'Update Prompt' : 'Create Prompt')}
+                        {isLoading ? 'Saving...' : (initialData ? 'Update Mantra' : 'Save Mantra')}
                     </Button>
                 </form>
             </div>
@@ -195,7 +194,7 @@ export function PromptForm({
                 <div className="sticky top-20">
                     <PromptCard prompt={previewPrompt} currentUserId={currentUserId} />
                     <div className="mt-8 p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-yellow-500/90 text-sm">
-                        <strong>Tip for Nano Banana 2:</strong> Be extremely descriptive with subjects, lighting, composition, and camera angle. If rendering text, wrap the exact phrase in quotes.
+                        <strong>Tip for Mantra Practice:</strong> Focus on the sound vibration and meaning while chanting. Consistency is key to experiencing the spiritual benefits of these sacred sounds.
                     </div>
                 </div>
             </div>

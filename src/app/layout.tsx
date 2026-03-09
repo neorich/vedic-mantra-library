@@ -12,6 +12,28 @@ const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-display" });
 export const metadata: Metadata = {
   title: "Vedic Mantras | Sacred Sanskrit Chants",
   description: "Explore the largest library of ancient Sanskrit mantras with translations, benefits, and interactive jaap counting.",
+  openGraph: {
+    title: "Vedic Mantras | Sacred Sanskrit Chants",
+    description: "Explore the largest library of ancient Sanskrit mantras with translations, benefits, and interactive jaap counting.",
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://vedic-mantra-library-neorich.netlify.app',
+    siteName: 'Vedic Mantras',
+    images: [
+      {
+        url: '/og.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vedic Mantras | Sacred Sanskrit Chants',
+    description: 'Explore the largest library of ancient Sanskrit mantras with translations, benefits, and interactive jaap counting.',
+    images: ['/og.png'],
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://vedic-mantra-library-neorich.netlify.app'),
 };
 
 export default function RootLayout({

@@ -2,6 +2,33 @@ import { createClient } from '@/lib/supabase/server'
 import { MantraList } from '@/components/mantra-list'
 import { Badge } from '@/components/ui/badge'
 import { BookOpen } from 'lucide-react'
+import { Metadata } from 'next'
+import { AdSlot } from '@/components/ad-slot'
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
+    const supabase = await createClient()
+    const resolvedParams = await searchParams
+    const categoryId = resolvedParams.category
+
+    if (categoryId) {
+        const { data: cat } = await supabase.from('categories').select('name').eq('id', categoryId).single()
+        if (cat) {
+            return {
+                title: `${cat.name} Mantras | Vedic Library`,
+                description: `Explore powerful Vedic chants for ${cat.name.toLowerCase()}.`,
+                openGraph: {
+                    title: `${cat.name} Mantras | Vedic Library`,
+                    description: `Explore powerful Vedic chants for ${cat.name.toLowerCase()}.`,
+                }
+            }
+        }
+    }
+
+    return {
+        title: "Explore Mantras | Vedic Library",
+        description: "Browse our expansive collection of sacred Sanskrit mantras.",
+    }
+}
 
 export default async function ExplorePage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
     const supabase = await createClient()
@@ -49,6 +76,8 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
                     </p>
                 </div>
             </div>
+
+            <AdSlot className="mb-12 rounded-[2rem]" height={120} />
 
             {mantras && mantras.length > 0 ? (
                 <MantraList mantras={mantras} />

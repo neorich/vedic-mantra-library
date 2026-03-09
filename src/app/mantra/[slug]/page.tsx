@@ -5,6 +5,30 @@ import { JaapCounter } from '@/components/jaap-counter'
 import { ArrowLeft, Heart, Sparkles, BookOpen, Volume2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Metadata } from 'next'
+import { AdSlot } from '@/components/ad-slot'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const supabase = await createClient()
+    const resolvedParams = await params
+
+    const { data: mantra } = await supabase
+        .from('mantras')
+        .select('title, translation, benefits')
+        .eq('slug', resolvedParams.slug)
+        .single()
+
+    if (!mantra) return {}
+
+    return {
+        title: `${mantra.title} | Vedic Mantras`,
+        description: mantra.translation?.substring(0, 160) || mantra.benefits?.substring(0, 160),
+        openGraph: {
+            title: `${mantra.title} | Vedic Mantras`,
+            description: mantra.translation?.substring(0, 160) || mantra.benefits?.substring(0, 160),
+        }
+    }
+}
 
 export default async function MantraDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const supabase = await createClient()
@@ -99,13 +123,15 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                             </p>
                         </div>
                     </div>
+
+                    <AdSlot className="mt-8 rounded-[2rem]" height={120} />
                 </div>
 
                 {/* Right Column: Interaction (Desktop sticky) */}
                 <div className="lg:col-span-12 xl:col-span-4 lg:sticky lg:top-24 h-fit">
                     <JaapCounter mantraId={mantra.id} />
 
-                    <div className="mt-8 glass p-6 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-primary/5 transition-colors">
+                    <div className="mt-8 mb-8 glass p-6 rounded-3xl flex items-center justify-between group cursor-pointer hover:bg-primary/5 transition-colors">
                         <div className="flex items-center gap-4">
                             <div className="bg-muted p-3 rounded-2xl group-hover:bg-primary/10 transition-colors">
                                 <Volume2 className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -117,6 +143,8 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                         </div>
                         <Badge variant="outline" className="text-[0.6rem] uppercase tracking-wider font-bold opacity-60">SOON</Badge>
                     </div>
+
+                    <AdSlot height={600} format="rectangle" className="rounded-3xl" />
                 </div>
             </div>
         </div>

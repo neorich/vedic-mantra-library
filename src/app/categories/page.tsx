@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { useState, useEffect } from 'react'
+import { AdSlot } from '@/components/ad-slot'
 
 const iconMap: Record<string, any> = {
     'Peace & Shanti': Moon,
@@ -66,6 +67,14 @@ export default function CategoriesPage() {
                 <p className="text-muted-foreground text-lg max-w-2xl font-serif italic">
                     Follow the path that resonates with your soul's current vibration.
                 </p>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+            >
+                <AdSlot className="mb-12 rounded-[2rem]" height={120} />
             </motion.div>
 
             {!loading && categories.length > 0 ? (

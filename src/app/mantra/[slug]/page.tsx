@@ -6,13 +6,14 @@ import { ArrowLeft, Heart, Sparkles, BookOpen, Volume2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
-export default async function MantraDetailPage({ params }: { params: { slug: string } }) {
+export default async function MantraDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const supabase = await createClient()
+    const resolvedParams = await params
 
     const { data: mantra, error } = await supabase
         .from('mantras')
         .select('*, categories(name)')
-        .eq('slug', params.slug)
+        .eq('slug', resolvedParams.slug)
         .single()
 
     if (error || !mantra) {

@@ -3,13 +3,27 @@ import { MantraList } from '@/components/mantra-list'
 import { Badge } from '@/components/ui/badge'
 import { BookOpen } from 'lucide-react'
 
-export default async function ExplorePage() {
+export default async function ExplorePage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
     const supabase = await createClient()
+    const resolvedParams = await searchParams
+    const categoryId = resolvedParams.category
 
-    const { data: mantras, error } = await supabase
+    let query = supabase
         .from('mantras')
         .select('*, categories(name)')
         .order('created_at', { ascending: false })
+
+    if (categoryId) {
+        query = query.eq('category_id', categoryId)
+    }
+
+    const { data: mantras, error } = await query
+
+    let categoryName = null
+    if (categoryId) {
+        const { data: cat } = await supabase.from('categories').select('name').eq('id', categoryId).single()
+        if (cat) categoryName = cat.name
+    }
 
     if (error) {
         console.error('Error fetching mantras:', error)
@@ -23,8 +37,12 @@ export default async function ExplorePage() {
                         <BookOpen className="w-3 h-3 mr-2" />
                         Sacred Library
                     </Badge>
-                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-                        Explore <span className="text-gradient">Mantras</span>
+                    <h1 className="text-4xl md:text-5xl font-serif font-black tracking-tight">
+                        {categoryName ? (
+                            <>{categoryName} <span className="text-gradient">Mantras</span></>
+                        ) : (
+                            <>Explore <span className="text-gradient">Mantras</span></>
+                        )}
                     </h1>
                     <p className="text-muted-foreground text-lg max-w-2xl">
                         Discover powerful ancient chants for peace, health, success, and spiritual growth.

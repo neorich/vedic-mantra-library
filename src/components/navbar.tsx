@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Sun, Search, BookOpen } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export function Navbar() {
     return (
@@ -34,6 +35,7 @@ export function Navbar() {
                     <Link href="/explore" className="sm:hidden text-muted-foreground hover:text-primary transition-colors">
                         <Search className="h-5 w-5" />
                     </Link>
+                    <ThemeToggle />
                 </div>
             </div>
         </nav>

@@ -13,6 +13,7 @@ const cinzel = Cinzel({ subsets: ["latin"], variable: "--font-display" });
 export const metadata: Metadata = {
   title: "Vedic Mantras | Sacred Sanskrit Chants",
   description: "Explore the largest library of ancient Sanskrit mantras with translations, benefits, and interactive jaap counting.",
+  manifest: "/manifest.json",
   openGraph: {
     title: "Vedic Mantras | Sacred Sanskrit Chants",
     description: "Explore the largest library of ancient Sanskrit mantras with translations, benefits, and interactive jaap counting.",

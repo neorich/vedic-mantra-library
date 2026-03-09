@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import * as motion from 'framer-motion/client'
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { JaapCounter } from '@/components/jaap-counter'
@@ -134,19 +135,31 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                         </div>
 
                         <div className="space-y-12 text-center">
-                            <div className="space-y-8">
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="space-y-8"
+                            >
                                 <span className="text-[0.6rem] font-bold uppercase tracking-[0.5em] text-primary/60 block">Sacred Sanskrit</span>
                                 <h2 className="text-4xl md:text-7xl font-display leading-[1.3] text-foreground font-medium px-4">
                                     {mantra.sanskrit_text}
                                 </h2>
-                            </div>
+                            </motion.div>
 
-                            <div className="space-y-4">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="space-y-4"
+                            >
                                 <span className="text-[0.6rem] font-black uppercase tracking-[0.3em] text-muted-foreground block">Transliteration</span>
-                                <p className="text-xl md:text-2xl font-serif italic text-muted-foreground leading-relaxed max-w-3xl mx-auto italic">
+                                <p className="text-xl md:text-2xl font-serif italic text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                                     {mantra.transliteration}
                                 </p>
-                            </div>
+                            </motion.div>
 
                             {mantra.pronunciation && (
                                 <div className="space-y-4 pt-8 border-t border-primary/10 max-w-2xl mx-auto mt-8">
@@ -165,7 +178,13 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
 
                     {/* Translation & Benefits */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-4 glass p-8 rounded-[2.5rem]">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5 }}
+                            className="space-y-4 glass p-8 rounded-[2.5rem]"
+                        >
                             <div className="flex items-center gap-3 mb-2">
                                 <div className="bg-primary/10 p-2 rounded-xl">
                                     <BookOpen className="w-5 h-5 text-primary" />
@@ -175,8 +194,14 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                             <p className="text-muted-foreground leading-relaxed">
                                 <RichTextRenderer text={mantra.translation || ''} />
                             </p>
-                        </div>
-                        <div className="space-y-4 glass p-8 rounded-[2.5rem]">
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="space-y-4 glass p-8 rounded-[2.5rem]"
+                        >
                             <div className="flex items-center gap-3 mb-2">
                                 <div className="bg-green-100 dark:bg-green-950/20 p-2 rounded-xl">
                                     <Heart className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -186,7 +211,7 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                             <p className="text-muted-foreground leading-relaxed">
                                 <RichTextRenderer text={mantra.benefits || ''} />
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
 
                     <AdSlot className="mt-8 rounded-[2rem]" height={120} />

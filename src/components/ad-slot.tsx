@@ -14,7 +14,8 @@ export function AdSlot({ className = '', width = '100%', height = 90, format = '
 
     // In production, you would check an environment variable like process.env.NEXT_PUBLIC_ADSENSE_CLIENT
     // to decide whether to render the actual ad tag or a placeholder.
-    const showPlaceholder = process.env.NODE_ENV !== 'production' || !process.env.NEXT_PUBLIC_ADSENSE_CLIENT
+    const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT || 'ca-pub-9182214608135331'
+    const showPlaceholder = process.env.NODE_ENV !== 'production'
 
     useEffect(() => {
         setIsMounted(true)
@@ -47,7 +48,7 @@ export function AdSlot({ className = '', width = '100%', height = 90, format = '
             <ins
                 className="adsbygoogle"
                 style={{ display: 'block', width, height }}
-                data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT}
+                data-ad-client={clientId}
                 data-ad-slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT || "auto"} // Fallback or pass as prop
                 data-ad-format={format}
                 data-full-width-responsive="true"

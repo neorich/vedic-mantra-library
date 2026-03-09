@@ -51,6 +51,28 @@ export default function CategoriesPage() {
 
     return (
         <div className="container mx-auto px-4 py-12">
+            {categories.length > 0 && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "CollectionPage",
+                            "name": "Vedic Mantra Categories",
+                            "description": "Explore ancient Sanskrit mantras categorized by spiritual focus.",
+                            "mainEntity": {
+                                "@type": "ItemList",
+                                "itemListElement": categories.map((cat, index) => ({
+                                    "@type": "ListItem",
+                                    "position": index + 1,
+                                    "url": `https://vedic-mantra-library-neorich.netlify.app/explore?category=${cat.id}`,
+                                    "name": cat.name
+                                }))
+                            }
+                        })
+                    }}
+                />
+            )}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}

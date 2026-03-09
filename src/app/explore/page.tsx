@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { MantraList } from '@/components/mantra-list'
+import { BookOpen, Sparkles, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { BookOpen } from 'lucide-react'
 import { Metadata } from 'next'
 import { AdSlot } from '@/components/ad-slot'
 
@@ -56,6 +57,13 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
         console.error('Error fetching mantras:', error)
     }
 
+    let mantraOfTheDay = null
+    if (!categoryId && mantras && mantras.length > 0) {
+        const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000)
+        const index = dayOfYear % mantras.length
+        mantraOfTheDay = mantras[index]
+    }
+
     return (
         <div className="container mx-auto px-4 py-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -77,7 +85,41 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
                 </div>
             </div>
 
-            <AdSlot className="mb-12 rounded-[2rem]" height={120} />
+            {mantraOfTheDay && (
+                <div className="mb-16">
+                    <div className="flex items-center gap-2 mb-6 px-2">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                        <h2 className="text-2xl font-serif font-bold text-foreground">Mantra of the Day</h2>
+                    </div>
+                    <Link href={`/mantra/${mantraOfTheDay.slug}`} className="block group">
+                        <div className="glass p-8 md:p-12 rounded-[3rem] relative overflow-hidden ring-1 ring-white/10 hover:ring-primary/30 transition-all duration-500 hover:bg-primary/5">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full group-hover:bg-primary/10 transition-colors" />
+
+                            <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
+                                <div className="space-y-4 max-w-2xl">
+                                    <h3 className="text-3xl md:text-5xl font-display font-medium text-foreground tracking-tight">
+                                        {mantraOfTheDay.sanskrit_text}
+                                    </h3>
+                                    <div>
+                                        <p className="font-serif text-xl md:text-2xl font-bold text-primary mb-2">
+                                            {mantraOfTheDay.title}
+                                        </p>
+                                        <p className="text-muted-foreground leading-relaxed line-clamp-2">
+                                            {mantraOfTheDay.translation}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="bg-primary/10 p-4 rounded-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 md:ml-auto shrink-0 text-primary">
+                                    <ArrowRight className="w-6 h-6" />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+            )}
+
+            <AdSlot className="mb-16 rounded-[2rem] overflow-hidden" height={120} />
 
             {mantras && mantras.length > 0 ? (
                 <MantraList mantras={mantras} />

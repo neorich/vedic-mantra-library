@@ -44,8 +44,54 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
         notFound()
     }
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Article",
+                "headline": `${mantra.title} - Meaning and Benefits`,
+                "description": mantra.translation || mantra.benefits,
+                "articleSection": mantra.categories?.name,
+                "text": mantra.sanskrit_text
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": `What is the meaning of ${mantra.title}?`,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": mantra.translation
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": `What are the benefits of chanting ${mantra.title}?`,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": mantra.benefits
+                        }
+                    },
+                    ...(mantra.pronunciation ? [{
+                        "@type": "Question",
+                        "name": `How to pronounce ${mantra.title}?`,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `The phonetic pronunciation is: ${mantra.pronunciation}. Listen and repeat slowly.`
+                        }
+                    }] : [])
+                ]
+            }
+        ]
+    }
+
     return (
         <div className="container mx-auto px-4 py-12">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+            />
             <Link href="/explore" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8 group">
                 <div className="bg-muted p-2 rounded-xl group-hover:bg-primary/10 transition-colors">
                     <ArrowLeft className="w-4 h-4" />
@@ -66,6 +112,11 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                             {mantra.deity && (
                                 <Badge variant="secondary" className="bg-orange-100/50 text-orange-700 dark:bg-orange-950/20 dark:text-orange-400 border-none text-xs py-1">
                                     Deity: {mantra.deity}
+                                </Badge>
+                            )}
+                            {mantra.source && (
+                                <Badge variant="outline" className="border-primary/20 bg-background text-muted-foreground text-xs py-1">
+                                    Source: {mantra.source}
                                 </Badge>
                             )}
                         </div>
@@ -95,6 +146,19 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                                     {mantra.transliteration}
                                 </p>
                             </div>
+
+                            {mantra.pronunciation && (
+                                <div className="space-y-4 pt-8 border-t border-primary/10 max-w-2xl mx-auto mt-8">
+                                    <div className="flex items-center justify-center gap-2 mb-2">
+                                        <Volume2 className="w-4 h-4 text-primary" />
+                                        <span className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-primary block">Pronunciation Guide</span>
+                                    </div>
+                                    <p className="text-lg md:text-xl font-medium text-foreground leading-relaxed bg-primary/5 p-4 rounded-2xl border border-primary/10">
+                                        &quot;{mantra.pronunciation}&quot;
+                                    </p>
+                                    <span className="text-xs text-muted-foreground block italic opacity-80">Listen & repeat slowly</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 

@@ -151,16 +151,18 @@ export function PromptCard({ prompt, currentUserId, isDashboard, onDelete }: Pro
                 {prompt.style_tags && prompt.style_tags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-4">
                         {prompt.style_tags.map(tag => (
-                            <Badge key={tag} variant="outline" className="text-[10px] border-zinc-800 text-zinc-500 bg-zinc-950/50">
-                                #{tag}
-                            </Badge>
+                            <Link key={tag} href={`/explore?q=${encodeURIComponent(tag)}`}>
+                                <Badge variant="outline" className="text-[10px] border-zinc-800 text-zinc-500 bg-zinc-950/50 hover:bg-yellow-500/10 hover:text-yellow-500 cursor-pointer transition-colors z-10 relative">
+                                    #{tag}
+                                </Badge>
+                            </Link>
                         ))}
                     </div>
                 )}
             </CardContent>
 
             <CardFooter className="pt-3 pb-3 border-t border-zinc-800/50 bg-zinc-900/30 flex justify-between items-center">
-                <div className="text-xs text-zinc-500">
+                <div className="text-xs text-zinc-500" suppressHydrationWarning>
                     {new Date(prompt.created_at).toLocaleDateString()}
                 </div>
 

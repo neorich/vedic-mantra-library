@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { PromptInteractions } from './prompt-interactions'
+import { PromptCard, Prompt } from '@/components/prompt-card'
 import Link from 'next/link'
 import { ChevronLeft, User, Calendar } from 'lucide-react'
 
@@ -57,8 +58,18 @@ export default async function SinglePromptPage({
         notFound()
     }
 
+    // Fetch related prompts
+    const { data: relatedPrompts } = await supabase
+        .from('prompts')
+        .select('*')
+        .eq('category', prompt.category)
+        .neq('id', prompt.id)
+        .eq('visibility', 'public')
+        .order('votes', { ascending: false })
+        .limit(3)
+
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl pt-12">
+        <div className="container mx-auto px-4 py-8 max-w-5xl pt-12">
             <Link href="/explore">
                 <Button variant="ghost" size="sm" className="mb-6 -ml-2 text-zinc-400 hover:text-zinc-100">
                     <ChevronLeft className="h-4 w-4 mr-1" />
@@ -66,7 +77,7 @@ export default async function SinglePromptPage({
                 </Button>
             </Link>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl mb-12">
                 {/* Header Section */}
                 <div className="p-6 md:p-10 border-b border-zinc-800/50 bg-zinc-900/50">
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
@@ -130,6 +141,22 @@ export default async function SinglePromptPage({
                     )}
                 </div>
             </div>
+
+            {/* Related Prompts Section */}
+            {relatedPrompts && relatedPrompts.length > 0 && (
+                <div className="mt-16 border-t border-zinc-800/50 pt-12">
+                    <h2 className="text-2xl font-bold text-zinc-100 mb-8">Related Prompts</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {relatedPrompts.map((relatedPrompt: Prompt) => (
+                            <PromptCard
+                                key={relatedPrompt.id}
+                                prompt={relatedPrompt}
+                                currentUserId={session?.user?.id}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

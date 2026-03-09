@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Metadata } from 'next'
 import { AdSlot } from '@/components/ad-slot'
+import { RichTextRenderer } from '@/components/rich-text-renderer'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const supabase = await createClient()
@@ -172,7 +173,7 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                                 <h3 className="font-bold text-lg">Translation</h3>
                             </div>
                             <p className="text-muted-foreground leading-relaxed">
-                                {mantra.translation}
+                                <RichTextRenderer text={mantra.translation || ''} />
                             </p>
                         </div>
                         <div className="space-y-4 glass p-8 rounded-[2.5rem]">
@@ -183,7 +184,7 @@ export default async function MantraDetailPage({ params }: { params: Promise<{ s
                                 <h3 className="font-bold text-lg">Benefits</h3>
                             </div>
                             <p className="text-muted-foreground leading-relaxed">
-                                {mantra.benefits}
+                                <RichTextRenderer text={mantra.benefits || ''} />
                             </p>
                         </div>
                     </div>
